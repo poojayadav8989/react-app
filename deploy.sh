@@ -1,8 +1,6 @@
 #!/bin/bash
-echo "Deploying container..."
 
-docker stop react-app || true
-docker rm react-app || true
+echo "Running container..."
+/usr/local/bin/docker run -d -p 3000:80 poojayadav8989/react-app:latest
 
-docker run -d -p 80:80 --name react-app poojayadav/react-app:latest
 
