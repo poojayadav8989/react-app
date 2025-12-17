@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-# Add Node, npm, Docker to PATH so Jenkins can find them
+
 export PATH=/opt/homebrew/bin:/usr/local/bin:$PATH
 
 echo "Installing dependencies"
