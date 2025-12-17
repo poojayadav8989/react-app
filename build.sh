@@ -2,13 +2,14 @@
 set -e
 
 echo "Installing dependencies"
-npm install
+/opt/homebrew/bin/npm install
 
 echo "Building React app"
-npm run build
+/opt/homebrew/bin/npm run build
 
 echo "Building Docker image"
 docker build -t poojayadav253/react-app:latest .
+
 
 
 
