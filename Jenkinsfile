@@ -1,10 +1,16 @@
 pipeline {
     agent any
 
+    environment {
+        DOCKER_CRED = credentials('docker-cred')
+    }
+
     stages {
+
         stage('Checkout Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/poojayadav8989/react-app.git'
+                git branch: 'main',
+                    url: 'https://github.com/poojayadav8989/react-app.git'
             }
         }
 
@@ -15,28 +21,12 @@ pipeline {
             }
         }
 
-        stage('Docker Hub Login') {
+        stage('Push & Deploy') {
             steps {
-                withCredentials([usernamePassword(
-                    credentialsId: 'dockerhub',
-                    usernameVariable: 'DOCKER_USER',
-                    passwordVariable: 'DOCKER_PASS'
-                )]) {
-                    sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
-                }
-            }
-        }
-
-        stage('Push Image to Docker Hub') {
-            steps {
-                sh 'docker push poojayadav/react-app:latest'
-            }
-        }
-
-        stage('Deploy Application') {
-            steps {
-                sh 'chmod +x deploy.sh'
-                sh './deploy.sh'
+                sh '''
+                    docker login -u $DOCKER_CRED_USR -p $DOCKER_CRED_PSW
+                    ./deploy.sh
+                '''
             }
         }
     }

@@ -1,6 +1,15 @@
 #!/bin/bash
+set -e
 
-echo "Running container..."
-/usr/local/bin/docker run -d -p 3000:80 poojayadav8989/react-app:latest
+echo "Logging into Docker Hub"
+docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 
+echo "Pushing image to Docker Hub"
+docker push poojayadav253/react-app:latest
+
+echo "Deploying container"
+docker stop react-app || true
+docker rm react-app || true
+
+docker run -d -p 80:80 --name react-app poojayadav253/react-app:latest
 
