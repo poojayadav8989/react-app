@@ -1,16 +1,15 @@
 #!/bin/bash
 set -e
 
-export PATH=/opt/homebrew/bin:$PATH
-
+# Add Node, npm, Docker to PATH so Jenkins can find them
+export PATH=/opt/homebrew/bin:/usr/local/bin:$PATH
 
 echo "Installing dependencies"
-/opt/homebrew/bin/node /opt/homebrew/bin/npm install
+npm install
 
 echo "Building React app"
-/opt/homebrew/bin/node /opt/homebrew/bin/npm run build
+npm run build
 
 echo "Building Docker image"
 docker build -t poojayadav253/react-app:latest .
-
 
