@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+export PATH=/opt/homebrew/bin:$PATH
+
+
 echo "Installing dependencies"
 /opt/homebrew/bin/node /opt/homebrew/bin/npm install
 
